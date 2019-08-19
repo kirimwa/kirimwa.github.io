@@ -5,7 +5,7 @@
  * @Linkedin: linkedin.com/in/dickyermawan 
  * @Date: 2019-08-18 17:56:21 
  * @Last Modified by: Dicky Ermawan S., S.T., MTA
- * @Last Modified time: 2019-08-19 16:42:01
+ * @Last Modified time: 2019-08-19 23:22:07
  */
 
 let cekPesan = false
@@ -19,7 +19,8 @@ let setCekPesan = () => {
 }
 
 let kirimWa = (no, pesan) => {
-    no = no.replace(/^.{1}/g, '62')
+    if(no[0] !== '62')
+        no = no.replace(/^.{1}/g, '62')
     pesan = encodeURI(pesan)
     let link = 'https://api.whatsapp.com/send?phone='+ no +'&text=' + pesan
     window.location.href = link
@@ -29,6 +30,15 @@ $('document').ready(function(){
     
     moment.locale('id')
     intv()
+
+    // no.wa sedang di ketik -> event input
+    $('#nomor').on('input', function(){
+        no = $('#nomor').val()
+        if(no==='') 
+            $('#nomor-err').show('slow') 
+        else
+            $('#nomor-err').hide('slow') 
+    })
     
     // checkBox Pesan -> click
     $('#cek-pesan').click(function(){
